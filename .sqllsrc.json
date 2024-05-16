@@ -1,0 +1,9 @@
+{
+    "connections": [
+        {
+            "name": "cms-sqlite-db",
+            "adapter": "sqlite3",
+            "filename": "./stores/cmsdb.db",
+        }
+    ]
+}
