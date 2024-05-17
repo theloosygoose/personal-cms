@@ -1,3 +1,5 @@
+run:
+	@go run ./cmd/cms/main.go
 build:
 	@go build -o ./bin/main ./cmd/cms/main.go
 
