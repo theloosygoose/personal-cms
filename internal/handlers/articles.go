@@ -9,11 +9,11 @@ import (
 )
 
 type ArticleHandler struct {
-    db db.DB
+    DB db.DB
 }
 
 func (h *ArticleHandler) HandleGetArticle(w http.ResponseWriter, r *http.Request){
-    results, err := h.db.DbGetArticles()
+    results, err := h.DB.DbGetArticles()
     if err != nil {
         w.WriteHeader(http.StatusInternalServerError)
         return

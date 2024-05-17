@@ -4,4 +4,4 @@ build:
 	@go build -o ./bin/main ./cmd/cms/main.go
 
 migrate_up:
-	@migrate -path migrations/ -database "sqlite3://stores/main" up
+	@migrate -path database/migrations/ -database "sqlite3://stores/personal-cms.db" up

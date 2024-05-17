@@ -3,7 +3,7 @@
         {
             "name": "cms-sqlite-db",
             "adapter": "sqlite3",
-            "filename": "./stores/cmsdb.db",
+            "filename": "./database/personal-cms.db",
         }
     ]
 }
