@@ -16,18 +16,19 @@ func NewDB(db *sql.DB) DB {
 
 func Connect() (*sql.DB, error) {
     connInfo := os.Getenv("DB_SQLITE")
+    log.Println(connInfo)
 
 	db, err := sql.Open("sqlite3", connInfo)
 	if err != nil {
 		log.Fatal("Could not Connect to DB", err)
-
         return nil, err
 	}
-
 	log.Println("Successfully Connected to db!")
+
+    db.Ping()
 	return db, nil
 }
 
-func CloseConnection(db *sql.DB) {
+func CloseConnection(db DB) {
 	defer db.Close()
 }
