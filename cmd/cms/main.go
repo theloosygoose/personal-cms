@@ -2,10 +2,11 @@ package main
 
 import (
 	"log"
-    _"net/http"
+	_ "net/http"
 
-    "github.com/joho/godotenv"
+	"github.com/joho/godotenv"
 
+	"github.com/theloosygoose/cms-api/internal/db"
 	"github.com/theloosygoose/cms-api/internal/server"
 )
 
@@ -14,9 +15,10 @@ func main() {
     if err != nil {
         log.Panic("Error Loading .env file")
     }
+    conn, err := db.Connect()
+    DB := db.NewDB(conn)
 
-    server := server.NewServer()
-    log.Println("Making New Server")
+    server := server.NewServer(DB)
 
     err = server.ListenAndServe()
     if err != nil {

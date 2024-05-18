@@ -3,12 +3,16 @@ package routes
 import (
 	"net/http"
 
+	"github.com/theloosygoose/cms-api/internal/db"
 	"github.com/theloosygoose/cms-api/internal/handlers"
 )
 
-func AddRoutes(s *http.ServeMux){
+func AddRoutes(
+    mux *http.ServeMux, 
+    articleStore db.DB,
 
-    articlehandler := handlers.ArticleHandle{}
+){
+    articlehandler := handlers.ArticleHandle{ DB: articleStore }
 
-    s.HandleFunc("GET /api/article", articlehandler.HandleGetArticle)
+    mux.HandleFunc("GET /api/article", articlehandler.HandleGetArticle())
 }

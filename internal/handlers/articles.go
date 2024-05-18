@@ -2,40 +2,27 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
-    "log"
 
 	"github.com/theloosygoose/cms-api/internal/db"
+	"github.com/theloosygoose/cms-api/internal/utils"
 )
 
-type ArticleHandle struct {}
+type ArticleHandle struct { db.DB }
 
-func (h ArticleHandle) HandleGetArticle(w http.ResponseWriter, r *http.Request){
-    conn, err := db.Connect()
-    if err != nil {
-        log.Println("Could not Connect to DB")
-    }
-    d := db.NewDB(conn)
+func (h ArticleHandle) HandleGetArticle() http.HandlerFunc {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+        results, err := h.DB.DbGetArticles()
+        if err != nil {
+            w.WriteHeader(http.StatusInternalServerError)
+            return
+        }
 
-    err = d.Ping()
-    if err != nil {
-        log.Panicln("DB Ping Error")
-        return
-    }
-
-    results, err := d.DbGetArticles()
-    if err != nil {
-        w.WriteHeader(http.StatusInternalServerError)
-        return
-    }
-
-    w.Header().Set("Content-Type", "application/json")
-    err = json.NewEncoder(w).Encode(results)
-
-    if err != nil {
-        log.Println("Unable to Encode Reponse to JSON")
-        return
-    }
-
-    db.CloseConnection(d)
+        err = utils.Encode(w, r, http.StatusOK, results)
+        if err != nil {
+            log.Println("Unable to Encode Reponse to JSON")
+            return
+        }
+    })
 }

@@ -16,7 +16,6 @@ func NewDB(db *sql.DB) DB {
 
 func Connect() (*sql.DB, error) {
     connInfo := os.Getenv("DB_SQLITE")
-    log.Println(connInfo)
 
 	db, err := sql.Open("sqlite3", connInfo)
 	if err != nil {
