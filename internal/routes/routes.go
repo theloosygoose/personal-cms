@@ -8,11 +8,24 @@ import (
 )
 
 func AddRoutes(
-    mux *http.ServeMux, 
-    articleStore db.DB,
+	mux *http.ServeMux,
+	articleStore db.DB,
+) {
 
-){
-    articlehandler := handlers.ArticleHandle{ DB: articleStore }
+	articlehandler := handlers.ArticleHandle{DB: articleStore}
+	dashboardhandler := handlers.DashboardHandler{DB: articleStore}
+    //API ROUTES
+	mux.HandleFunc("GET /api/article", articlehandler.GetAllArticles())
 
-    mux.HandleFunc("GET /api/article", articlehandler.HandleGetArticle())
+
+    //DASHBOARD ROUTES
+    mux.Handle("GET /", redirect())
+	mux.HandleFunc("GET /dashboard", dashboardhandler.DashboardMainShow())
+    mux.HandleFunc("GET /dashboard/writer", dashboardhandler.DashboardWriterShow())
+}
+
+func redirect() http.HandlerFunc {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+    })
 }

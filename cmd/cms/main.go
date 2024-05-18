@@ -8,6 +8,7 @@ import (
 
 	"github.com/theloosygoose/cms-api/internal/db"
 	"github.com/theloosygoose/cms-api/internal/server"
+
 )
 
 func main() {
@@ -15,9 +16,9 @@ func main() {
     if err != nil {
         log.Panic("Error Loading .env file")
     }
+
     conn, err := db.Connect()
     DB := db.NewDB(conn)
-
     server := server.NewServer(DB)
 
     err = server.ListenAndServe()
