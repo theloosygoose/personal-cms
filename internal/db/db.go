@@ -10,7 +10,7 @@ import (
 func (d DB) DbGetArticles() ([]types.Article, error) {
     var articles []types.Article
 
-    query := `SELECT * FROM articles;`
+    query := `SELECT (id, title, body, plaintext, created_on) FROM articles;`
 
     results, err := d.Query(query)
     if err != nil {
@@ -34,7 +34,7 @@ func (d DB) DbGetArticles() ([]types.Article, error) {
 }
 
 func (d DB) DbAddArticle(a types.Article) error {
-    query := `INSERT INTO articles (title, body, plain_text) VALUES (?,?,?);`
+    query := `INSERT INTO articles (title, body, plaintext) VALUES (?,?,?);`
 
     result, err := d.Exec(query, &a.Title, &a.Body, &a.PlainText)
     if err != nil {

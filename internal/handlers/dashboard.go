@@ -41,7 +41,8 @@ func (h DashboardHandler) AddArticle() http.HandlerFunc {
 
 		file, _, err := r.FormFile("article-file")
 		if err != nil {
-			log.Println(err)
+			log.Println("File Does Not Exist", err)
+            http.Redirect(w, r, "/dashboard/writer", http.StatusInternalServerError)
 			return
 		}
         mdBytes, err := io.ReadAll(file)

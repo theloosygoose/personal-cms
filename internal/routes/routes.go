@@ -5,6 +5,7 @@ import (
 
 	"github.com/theloosygoose/cms-api/internal/db"
 	"github.com/theloosygoose/cms-api/internal/handlers"
+	"github.com/theloosygoose/cms-api/internal/middleware"
 )
 
 func AddRoutes(
@@ -15,7 +16,7 @@ func AddRoutes(
 	articlehandler := handlers.ArticleHandle{DB: articleStore}
 	dashboardhandler := handlers.DashboardHandler{DB: articleStore}
     //API ROUTES
-	mux.HandleFunc("GET /api/article", articlehandler.GetAllArticles())
+	mux.HandleFunc("GET /api/article", middleware.AllowCors(articlehandler.GetAllArticles()))
 
 
     //DASHBOARD ROUTES

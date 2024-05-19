@@ -29,7 +29,7 @@ func Writer() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h2>This is the Writer Form</h2><form action=\"/dashboard/writer/new\" method=\"post\"><input type=\"text\" id=\"article-title\"> <input type=\"file\" id=\"article-file\" accept=\".md\"> <button type=\"submit\">Upload</button></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h2>This is the Writer Form</h2><form enctype=\"multipart/form-data\" action=\"/dashboard/writer/new\" method=\"post\"><input type=\"text\" id=\"article-title\" name=\"aritcle-title\"> <input type=\"file\" id=\"article-file\" name=\"article-file\" accept=\".md\"> <button type=\"submit\">Upload</button></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
