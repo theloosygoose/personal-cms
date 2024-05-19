@@ -16,11 +16,17 @@ func AddRoutes(
 	articlehandler := handlers.ArticleHandle{DB: articleStore}
 	dashboardhandler := handlers.DashboardHandler{DB: articleStore}
     //API ROUTES
-	mux.HandleFunc("GET /api/article", middleware.AllowCors(articlehandler.GetAllArticles()))
+	mux.HandleFunc("GET /api/article", 
+        middleware.AllowCors(articlehandler.GetAllArticles()),
+    )
+	mux.HandleFunc("GET /api/article/{id}", 
+        middleware.AllowCors(articlehandler.GetOneArticle()),
+    )
+	mux.HandleFunc("OPTIONS /api/article/{id}", middleware.AllowCors(articlehandler.GetOneArticle()),)
 
 
     //DASHBOARD ROUTES
-    mux.Handle("GET /", redirect())
+    mux.Handle("/", redirect())
 	mux.HandleFunc("GET /dashboard", dashboardhandler.MainShow())
     mux.HandleFunc("GET /dashboard/writer", dashboardhandler.WriterShow())
 

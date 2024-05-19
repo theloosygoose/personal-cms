@@ -1,0 +1,13 @@
+package responses
+
+import "github.com/theloosygoose/cms-api/internal/types"
+
+
+templ ArticleShow(a types.Article) {
+    <main>
+        <h2>{ a.Title }</h2>
+        <p>Created on: { a.Created_at }</p>
+
+        <p> @templ.Raw(a.Body)</p>
+    </main>
+}

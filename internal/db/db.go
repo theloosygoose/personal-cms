@@ -10,7 +10,7 @@ import (
 func (d DB) DbGetArticles() ([]types.Article, error) {
     var articles []types.Article
 
-    query := `SELECT (id, title, body, plaintext, created_on) FROM articles;`
+    query := `SELECT id, title, body, plaintext, created_on FROM articles;`
 
     results, err := d.Query(query)
     if err != nil {
@@ -33,6 +33,21 @@ func (d DB) DbGetArticles() ([]types.Article, error) {
     return articles, nil
 }
 
+func (d DB) DbGetSingleArticle(id string) (types.Article, error) {
+    query := `SELECT id, title, body, plaintext, created_on 
+    FROM articles WHERE id=?;`
+
+    var a types.Article
+
+    err := d.QueryRow(query, id).Scan(&a.Id, &a.Title, &a.Body, &a.PlainText, &a.Created_at)
+    if err != nil {
+        log.Println("Error Getting Scanning Article", err)
+        return a, err
+    }
+
+    return a, nil 
+}
+
 func (d DB) DbAddArticle(a types.Article) error {
     query := `INSERT INTO articles (title, body, plaintext) VALUES (?,?,?);`
 
@@ -47,3 +62,4 @@ func (d DB) DbAddArticle(a types.Article) error {
 
     return nil
 }
+
