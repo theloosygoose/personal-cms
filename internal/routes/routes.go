@@ -20,8 +20,10 @@ func AddRoutes(
 
     //DASHBOARD ROUTES
     mux.Handle("GET /", redirect())
-	mux.HandleFunc("GET /dashboard", dashboardhandler.DashboardMainShow())
-    mux.HandleFunc("GET /dashboard/writer", dashboardhandler.DashboardWriterShow())
+	mux.HandleFunc("GET /dashboard", dashboardhandler.MainShow())
+    mux.HandleFunc("GET /dashboard/writer", dashboardhandler.WriterShow())
+
+    mux.HandleFunc("POST /dashboard/writer/new", dashboardhandler.AddArticle())
 }
 
 func redirect() http.HandlerFunc {

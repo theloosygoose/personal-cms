@@ -4,9 +4,10 @@ import (
 	"log"
 
 	"github.com/theloosygoose/cms-api/internal/types"
+
 )
 
-func (d *DB) DbGetArticles() ([]types.Article, error) {
+func (d DB) DbGetArticles() ([]types.Article, error) {
     var articles []types.Article
 
     query := `SELECT * FROM articles;`
@@ -20,7 +21,7 @@ func (d *DB) DbGetArticles() ([]types.Article, error) {
     for results.Next() {
         var article types.Article
 
-        err = results.Scan(&article.Id, &article.Title, &article.Body, &article.Created_at)
+        err = results.Scan(&article.Id, &article.Title, &article.Body, &article.PlainText, &article.Created_at)
         if err != nil {
             log.Println("Error Scanning Results")
             return nil, err
@@ -32,16 +33,15 @@ func (d *DB) DbGetArticles() ([]types.Article, error) {
     return articles, nil
 }
 
-func (d *DB) DbAddArticle(a types.Article) error {
-    query := `INSERT INTO articles
-    (title, body) VALUES (?,?);`
+func (d DB) DbAddArticle(a types.Article) error {
+    query := `INSERT INTO articles (title, body, plain_text) VALUES (?,?,?);`
 
-    result, err := d.Exec(query, &a.Title, &a.Body)
-
+    result, err := d.Exec(query, &a.Title, &a.Body, &a.PlainText)
     if err != nil {
         log.Println("Error Adding to Database")
         return err
     }
+
     log.Println("Added to Database at:")
     log.Println(result.RowsAffected())
 

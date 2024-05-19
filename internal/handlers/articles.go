@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+
 	"github.com/theloosygoose/cms-api/internal/db"
 	"github.com/theloosygoose/cms-api/internal/utils"
 )
@@ -31,3 +32,4 @@ func (h ArticleHandle) GetOneArticle() http.HandlerFunc {
 		//Get Single Article
 	})
 }
+
